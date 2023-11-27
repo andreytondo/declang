@@ -1,0 +1,16 @@
+<ng-container *ngIf="usuario">
+    <div class="grid">
+        <h3 class="col-12">Usuário</h3>
+        <span class="col-3">ID: {{usuario.id}}</span>
+        <span class="col-3">Nome: {{usuario.nome}}</span>
+        <span class="col-3">Idade: {{usuario.idade}}</span>
+
+        <ng-container *ngFor="let atendimento of atendimentos$ | async as atendimentos">
+            <div class="col-12 grid">
+                <span class="col-3">Atendimento: {{atendimento.id}}</span>
+                <span class="col-3">Data e hora: {{atendimento.data | date: 'dd/MM/yyyy'}} {{atendimento.hora}}</span>
+                <span class="col-3">Observação: {{atendimento.observacao}}</span>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
