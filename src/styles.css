@@ -205,6 +205,24 @@ svg#clouds {
   width: 1920px;
 }
 
+p, span {
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.heading-title {
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  font-size: 1.5em;
+  border-bottom: 1px solid #cce
+}
+
+.heading-subtitle {
+  padding-bottom: 0.3em;
+  padding-bottom: 0.3em;
+  font-size: 1.25em;
+}
+
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
   .card-container > *:not(.circle-link),
