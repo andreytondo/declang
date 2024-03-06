@@ -23,11 +23,12 @@
 
 .toolbar #github-logo {
   height: 40px;
-  margin: 0 8px;
+  margin: 0 16px;
   color: white;
 }
 
-.toolbar #github-logo:hover {
+.toolbar #github-logo:hover,
+#toolbar-link:hover {
   opacity: 0.8;
 }
 
