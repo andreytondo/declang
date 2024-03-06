@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
     imports: [
         CommonModule
     ],
-    exports: [],
+    exports: [TopbarComponent],
     declarations: [TopbarComponent],
     providers: [],
 })

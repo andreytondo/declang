@@ -23,9 +23,13 @@ export class PainelDetalhesUsuarioComponent implements OnInit {
             this._usuarioService.getPrivilegios(this.usuarioId, 'atendimento'),
         ]).subscribe(([usuario, privilegios]) => {
             this.usuario = usuario;
-            if (privilegios.privilegios.includes('VISUALIZAR')) {
+            if (this._podeVisualizar(privilegios.privilegios)) {
                 this.atendimentos$ = this._usuarioService.getAtendimentos(this.usuarioId);
             }
         });
+    }
+
+    private _podeVisualizar(privilegios: string[]): boolean {
+        return privilegios.includes('VISUALIZAR');
     }
 }
