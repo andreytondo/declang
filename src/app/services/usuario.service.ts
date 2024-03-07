@@ -1,61 +1,69 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class UsuarioService {
     
     constructor() { }
-    
+
     getUsuario(usuarioId: number): Observable<any> {
-        // throw new Error('Method not implemented.');
-        
-        return of({
-            id: 1,
-            nome: 'João',
-            idade: 20,
-        });
-    }
-
-    getPrivilegios(usuarioId: number, tela: string): Observable<any> {
-        return of({
-            usuario: {
-                id: 1,
-            },
-            tela: tela,
-            privilegios: ['VISUALIZAR', 'EDITAR', 'EXCLUIR']
-        });
-    }
-
-    getAtendimentos(usuarioId: number): Observable<any> {
-        return of([
+        if (!usuarioId) return throwError(() => new Error('ID do usuário não informado'))
+        return of(
             {
-                id: 1,
-                usuario: {
-                    id: 1,
-                },
-                data: '2019-01-01',
-                hora: '10:00',
-                observacao: 'Atendimento 1'
-            },
-            {
-                id: 2,
-                usuario: {
-                    id: usuarioId,
-                },
-                data: '2019-01-02',
-                hora: '11:00',
-                observacao: 'Atendimento 2'
-            },
-            {
-                id: 3,
-                usuario: {
-                    id: usuarioId,
-                },
-                data: '2019-01-03',
-                hora: '12:00',
-                observacao: 'Atendimento 3'
+                id: usuarioId,
+                nome: 'João da Silva',
+                email: 'joaodasilva@mail.com',
+                admin: true
             }
-        ]);
+        );
     }
+
+    getPrivilegios(usuarioId: number): Observable<any> {
+        if (!usuarioId) return throwError(() => new Error('ID do usuário não informado'))
+        return of(
+            [
+                {
+                    id: 'CONTROLE',
+                    nome: 'Acesso ao painel de controle'
+                },
+                {
+                    id: 'FAVORITOS',
+                    nome: 'Acesso aos favoritos'
+                }
+            ]
+        );
+    }
+
+    getUltimoLogin(usuarioId: number): Observable<any> {
+        if (!usuarioId) return throwError(() => new Error('ID do usuário não informado'))
+        const date = new Date();
+        date.setDate(date.getDate() - 1);
+        return of(
+            {
+                id: usuarioId,
+                data: date
+            }
+        );
+    }
+
+    getAlteracoesNaData(usuarioId: number, data: any): Observable<any> {
+        if (!usuarioId) return throwError(() => new Error('ID do usuário não informado'))
+        if (!data) return throwError(() => new Error('Data não informada'))
+        return of(
+            [
+                {
+                    id: 1,
+                    alteracao: 'Nome alterado para João da Silva',
+                    data: data
+                },
+                {
+                    id: 2,
+                    alteracao: 'Email alterado para joaodasilva@mail.com',
+                    data: data
+                }
+            ]
+        );
+    }
+    
 
 }

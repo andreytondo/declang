@@ -10,26 +10,35 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 
 export class PainelDetalhesUsuarioComponent implements OnInit {
 
-    usuarioId: any;
-    usuario: any;
-    atendimentos$: Observable<any>;
+    info$: Observable<any>;
 
-    constructor(private _route: ActivatedRoute, private _usuarioService: UsuarioService) { }
+    constructor(private _route: ActivatedRoute, private _usuarioService: UsuarioService) {}
 
     ngOnInit() {
-        this.usuarioId = this._route.snapshot.params['id'];
-        forkJoin([
-            this._usuarioService.getUsuario(this.usuarioId).pipe(catchError(() => of(null))),
-            this._usuarioService.getPrivilegios(this.usuarioId, 'atendimento'),
-        ]).subscribe(([usuario, privilegios]) => {
-            this.usuario = usuario;
-            if (this._podeVisualizar(privilegios.privilegios)) {
-                this.atendimentos$ = this._usuarioService.getAtendimentos(this.usuarioId);
-            }
-        });
+        this.info$ = this._route.params.pipe(
+            switchMap(params => {
+                const usuarioId = params['id'] || 1;
+                return forkJoin({
+                    usuario: this._usuarioService.getUsuario(usuarioId),
+                    alteracoes: 
+                        this._usuarioService.getPrivilegios(usuarioId).pipe(
+                            switchMap(privilegios => {
+                                if (this._temPrivilegioControle(privilegios)) {
+                                    return this._usuarioService.getUltimoLogin(usuarioId).pipe(
+                                        switchMap(ultimoLogin => {
+                                            return this._usuarioService.getAlteracoesNaData(usuarioId, ultimoLogin.data);
+                                        })
+                                    )
+                                }
+                                return of(null);
+                            })
+                        ),
+                });
+            })
+        )
     }
 
-    private _podeVisualizar(privilegios: string[]): boolean {
-        return privilegios.includes('VISUALIZAR');
+    private _temPrivilegioControle(privilegios: any[]) {
+        return !!privilegios.find(p => p.id === 'CONTROLE');
     }
 }

@@ -1,15 +1,60 @@
-<ng-container *ngIf="usuario">
-    <div class="grid">
-        <h3 class="col-12">Usuário</h3>
-        <span class="col-3">ID: {{usuario.id}}</span>
-        <span class="col-3">Nome: {{usuario.nome}}</span>
-        <span class="col-3">Idade: {{usuario.idade}}</span>
+<ng-container *ngIf="info$ | async as info">
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px;">
+        <ng-container *ngIf="info.usuario">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-center">Detalhes do Usuário</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="nome">Nome
+                            <ng-container *ngIf="info.usuario.admin">
+                                <strong> - ADMIN</strong>
+                            </ng-container>
+                        </label>
+                        <input type="text" class="form-control" id="nome" [value]="info.usuario.nome" disabled>
 
-        <ng-container *ngFor="let atendimento of atendimentos$ | async as atendimentos">
-            <div class="col-12 grid">
-                <span class="col-3">Atendimento: {{atendimento.id}}</span>
-                <span class="col-3">Data e hora: {{atendimento.data | date: 'dd/MM/yyyy'}} {{atendimento.hora}}</span>
-                <span class="col-3">Observação: {{atendimento.observacao}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="text" class="form-control" id="email" [value]="info.usuario.email" disabled>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="info.alteracoes">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-center">Alterações realizadas no último login: </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Alteração</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of info.alteracoes">
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.alteracao }}</td>
+                                <td>{{ item.data | date: 'dd/MM/yyyy' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </ng-container>
     </div>

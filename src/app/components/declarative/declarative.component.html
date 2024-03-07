@@ -1,1 +1,69 @@
-<app-painel-detalhes-usuario></app-painel-detalhes-usuario>
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: start; padding: 10px;">
+    <h2 class="heading-title" style="width: 100%">Múltiplos observeables simultâneos:
+        <a href="https://rxjs.dev/api/index/function/forkJoin" target="_blank">forkJoin</a>
+    </h2>
+    <pre>
+        <code>
+            forkJoin(
+                this.usuarioService.getUsuarioById(this.id),
+                this.atendimentoService.getAtendimentosByUsuarioId(this.id)
+            ).subscribe(([usuario, atendimentos]) => {{ '{' }}
+                this.usuario = usuario;
+                this.atendimentos = atendimentos;
+            });
+        </code>
+    </pre>
+    <article>
+        <p>Dessa forma é possível mapear as respostas de cada observable em forma de array.</p>
+        <p>OBS: ele apenas emite os valores quando todos os observables finalizarem.</p>
+    </article>
+
+    <h2 class="heading-title" style="width: 100%">Utilizando o valor da resposta de um observable em outro:
+        <a href="https://rxjs.dev/api/operators/switchMap" target="_blank">switchMap</a>
+    </h2>
+    <pre>
+        <code>
+            this.usuarioService.getUsuarioById(this.id).pipe(
+                switchMap(usuario => this.atendimentoService.getAtendimentosByUsuarioId(usuario.id))
+            ).subscribe(atendimentos => this.atendimentos = atendimentos);
+        </code>
+    </pre>
+    <article>
+        <p>Com o switchMap é possível mapear o valor de um observable em outro.</p>
+        <p>Isso é útil quando precisamos do valor de um observable para fazer uma requisição em outro.</p>
+    </article>
+
+    <!-- zip rxjs-->
+    <h2 class="heading-title" style="width: 100%">Combinando observables diferentes no mesmo objeto:
+        <a href="https://rxjs.dev/api/index/function/zip" target="_blank">zip</a>
+    </h2>
+    <pre>
+        <code>
+            const idade$ = of(10,11,27)
+            const nome$ = of('João', 'Maria', 'José')
+            const sobrenome$ = of('Silva', 'Santos', 'Oliveira')
+            
+            zip(idade$, nome$, sobrenome$).pipe(
+                map((([idade, nome, sobrenome])) => ({{ '{' }} idade, nome, sobrenome}))
+            ).subscribe(x => console.log(x));
+            
+            // Saída: {{ '{' }} idade: 10, nome: 'João', sobrenome: 'Silva' }
+            //        {{ '{' }} idade: 11, nome: 'Maria', sobrenome: 'Santos' }
+            //        {{ '{' }} idade: 27, nome: 'José', sobrenome: 'Oliveira' }
+
+        </code>
+    </pre>
+    <article>
+        <p>Com o zip é possível combinar observables diferentes em um mesmo objeto.</p>
+        <p>Ele emite os valores de cada observable na mesma ordem em que foram passados como argumento.</p>
+    </article>
+
+    <br>
+    <p style="width: 100%">O RxJS fornnece um link que auxilia em encontrar o melhor operador para cada situação:  
+        <a href="https://rxjs.dev/operator-decision-tree" target="_blank">Operator Decision Tree</a>
+    </p>
+
+    <h1 class="heading-title" style="width: 100%">Exemplo de uso:</h1>
+    <app-painel-detalhes-usuario></app-painel-detalhes-usuario>
+</div>
+
