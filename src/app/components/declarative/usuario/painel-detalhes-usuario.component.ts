@@ -14,6 +14,13 @@ export class PainelDetalhesUsuarioComponent implements OnInit {
 
     constructor(private _route: ActivatedRoute, private _usuarioService: UsuarioService) {}
 
+    /**
+     * Inicializa o componente
+     * primeiro busca o id do usuário na rota
+     * depois busca as informações do usuário e suas alterações simultaneamente
+     * para buscar as alterações, verifica se o usuário tem o privilégio de controle
+     * se tiver, busca o último login e as alterações na data do último login
+     */
     ngOnInit() {
         this.info$ = this._route.params.pipe(
             switchMap(params => {

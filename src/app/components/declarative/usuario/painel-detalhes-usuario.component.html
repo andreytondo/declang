@@ -31,31 +31,37 @@
         </ng-container>
 
         <ng-container *ngIf="info.alteracoes">
-            <div class="row">
-                <div class="col-12">
-                    <h3 class="text-center">Alterações realizadas no último login: </h3>
+            <ng-container *ngIf="info.alteracoes.length; else vazio">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="text-center">Alterações realizadas no último login: </h3>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Alteração</th>
-                                <th>Data</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of info.alteracoes">
-                                <td>{{ item.id }}</td>
-                                <td>{{ item.alteracao }}</td>
-                                <td>{{ item.data | date: 'dd/MM/yyyy' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Alteração</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of info.alteracoes">
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.alteracao }}</td>
+                                    <td>{{ item.data | date: 'dd/MM/yyyy' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            </ng-container>
         </ng-container>
     </div>
 </ng-container>
+
+<ng-template #vazio>
+    <h3>Nenhuma alteração realizada no último login</h3>
+</ng-template>

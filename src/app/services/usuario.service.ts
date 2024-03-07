@@ -48,7 +48,7 @@ export class UsuarioService {
 
     getAlteracoesNaData(usuarioId: number, data: any): Observable<any> {
         if (!usuarioId) return throwError(() => new Error('ID do usuário não informado'))
-        if (!data) return throwError(() => new Error('Data não informada'))
+        if (!data) return throwError(() => new Error('Data não informada'));
         return of(
             [
                 {
