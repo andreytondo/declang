@@ -1,63 +1,53 @@
 <ng-container *ngIf="usuario">
-    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px;">
-        <div class="row">
-            <div class="col-12">
-                <h3 class="text-center">Detalhes do Usuário</h3>
-            </div>
+    <div class="grid" style="justify-content: center; align-items: center;">
+        <div class="col-12">
+            <h3 class="text-center">Detalhes do Usuário</h3>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="nome">Nome
-                        <ng-container *ngIf="usuario.admin">
-                            <strong> - ADMIN</strong>
-                        </ng-container>
-                    </label>
-                    <input type="text" class="form-control" id="nome" [value]="usuario.nome" disabled>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="text" class="form-control" id="email" [value]="usuario.email" disabled>
-                </div>
-            </div>
-        </div>
-
-        <ng-container *ngIf="alteracoes">
-            <ng-container *ngIf="alteracoes.length; else vazio">
-                <div class="row">
-                    <div class="col-12">
-                        <h3 class="text-center">Alterações realizadas no último login: </h3>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Alteração</th>
-                                    <th>Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of alteracoes">
-                                    <td>{{ item.id }}</td>
-                                    <td>{{ item.alteracao }}</td>
-                                    <td>{{ item.data | date: 'dd/MM/yyyy' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </ng-container>
-        </ng-container>
     </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="nome">Nome
+                <ng-container *ngIf="usuario.admin">
+                    <strong> - ADMIN</strong>
+                </ng-container>
+            </label>
+            <input type="text" class="form-control" id="nome" [value]="usuario.nome" disabled>
+
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="text" class="form-control" id="email" [value]="usuario.email" disabled>
+        </div>
+    </div>
+
+    <ng-container *ngIf="alteracoes">
+        <ng-container *ngIf="alteracoes.length; else vazio">
+            <div class="col-12">
+                <h3 class="text-center">Alterações realizadas no último login: </h3>
+            </div>
+            <div class="grid col-12">
+                <table class="table table-striped col-12">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Alteração</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of alteracoes">
+                            <td><div>{{ item.id }}</div></td>
+                            <td><div>{{ item.alteracao }}</div></td>
+                            <td>{{ item.data | date: 'dd/MM/yyyy' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+    </ng-container>
 </ng-container>
 
 <ng-template #vazio>

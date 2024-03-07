@@ -223,6 +223,21 @@ p, span {
   font-size: 1.25em;
 }
 
+.grid {
+	display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.5rem;
+  margin-left: -0.5rem;
+  margin-top: -0.5rem;
+  padding: 0.5rem;
+}
+
+.col-12 {
+  flex: 0 0 auto;
+  padding: .5rem;
+  width: 100%;
+}
+
 pre {
   background-color: #f1f1f1;
   width: 100%;
@@ -269,6 +284,13 @@ code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
+}
+
+.table tr div {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 }
 
 .table thead th {
