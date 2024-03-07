@@ -39,7 +39,7 @@ export class PainelDetalhesUsuarioComponent implements OnInit {
                                 }
                                 return of(null);
                             })
-                        ),
+                        )
                 });
             })
         )
