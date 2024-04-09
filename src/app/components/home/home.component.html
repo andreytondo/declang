@@ -46,5 +46,63 @@
         </p>
 
         <h2 class="heading-title">🧐 Como faço para programar declarativamente?</h2>
+        <p>
+            Em Angular, podemos aproveitar os operadores do RxJS (Reactive Extensions for JavaScript) para programar de
+            forma declarativa. <br>
+            RxJS é uma biblioteca reativa que facilita a programação assíncrona usando Observables. <br>
+            Para programar declarativamente em Angular com RxJS, podemos seguir estas etapas: <br>
+        </p>
+        <br>
+        <h3 class="heading-subtitle"> &#x2022; Criar Observables</h3>
+        <p>
+            Os Observables são a base da programação reativa em RxJS. Eles representam uma fonte de dados que pode ser
+            observada. <br>
+            Podemos criar Observables a partir de eventos, promises, ou até mesmo de dados estáticos.
+        </p>
+        <pre>
+            <code>
+                const numbers$: Observable&lt;number&gt; = of(1, 2, 3, 4, 5);
+            </code>
+        </pre>
+        <br>
+        <h3 class="heading-subtitle"> &#x2022; Encadear operadores</h3>
+        <p>
+            Com os operadores do RxJS, podemos manipular os dados emitidos por um Observable de forma declarativa. Os
+            operadores são <br>
+            funções de ordem superior que aceitam um Observable como entrada e retornam outro Observable. Podemos
+            encadear vários operadores
+            para criar pipelines de transformação de dados.
+        </p>
+        <pre>
+            <code>
+                numbers$
+                .pipe(
+                  filter(num => num % 2 === 0), // Filtra apenas os números pares
+                  map(num => num * num)          // Eleva ao quadrado cada número
+                )
+            </code>
+        </pre>
+        <br>
+        <h3 class="heading-subtitle"> &#x2022; Utilizar o gerenciamento de subscriptions do Angular</h3>
+        <p>
+            Dentro dos templates do Angular, podemos utilizar os Observables para vincular diretamente os dados do
+            componente à interface do usuário.
+            Isso proporciona uma maneira poderosa e declarativa de lidar com a renderização e atualização dos dados na
+            interface.O Angular gerencia automaticamente
+            a assinatura e cancelamento dos Observables, garantindo que os dados sejam exibidos e atualizados de forma
+            correta,
+            mesmo em situações assíncronas.
+        </p>
+        <pre>
+            <code>
+                &lt;div *ngIf="numbers$ | async as numbers"&gt;
+                    &lt;ul&gt;
+                      &lt;li *ngFor="let number of number"&gt;
+                        Número elevado ao quadrado: {{ '{'+'{' }} number {{ '}'+'}' }}
+                      &lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/div&gt;
+            </code>
+        </pre>
     </article>
 </div>
